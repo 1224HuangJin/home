@@ -34,11 +34,8 @@ export default ({ mode }) =>
               },
             },
             {
-              urlPattern: /(.*?)\.(png|jpe?g|svg|gif|bmp|psd|tiff|tga|eps)/, // 图片缓存
-              handler: "CacheFirst",
-              options: {
-                cacheName: "image-cache",
-              },
+              urlPattern: /^\/images\//, // 排除 /images 下的内容
+              handler: "NetworkOnly", // 完全依赖网络请求
             },
           ],
         },
