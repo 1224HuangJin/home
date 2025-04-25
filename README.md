@@ -59,7 +59,7 @@ pnpm build
 },
 ```
 
-其中 `icon` 网站链接的图标可以在 `src/components/Links/index.vue` 中添加:
+其中 `icon` 网站链接的图标可以在 `src/components/Links.vue` 中添加:
 
 ```js
 // 可前往 https://www.xicons.org 自行挑选并在此处引入
@@ -165,7 +165,7 @@ make clean all
 
 可以在 `public/images` 中修改网站背景
 
-如果想要添加更多的本地图片作为网站背景，可以将图片重命名 `background+数字` 的形式，并在 `src/components/Background/index.vue` 中进行修改：
+如果想要添加更多的本地图片作为网站背景，可以将图片重命名 `background+数字` 的形式，并在 `src/components/Background.vue` 中进行修改：
 
 ```js
 if (type == 0) {
