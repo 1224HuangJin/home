@@ -9,11 +9,11 @@
     "name": "云盘",
     "link": "https://pan.huang1111.cn/"
   },
-  {
-    "icon": "CompactDisc",
-    "name": "MiFeng音乐",
-    "link": "https://music.mfawa.top"
-  },
+  // {
+  //   "icon": "CompactDisc",
+  //   "name": "Music",
+  //   "link": "https://music.mfawa.top"
+  // },
   {
     "icon": "Compass",
     "name": "搜索",
