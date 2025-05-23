@@ -67,7 +67,7 @@ export const getWeather = async (key, city) => {
   return await res.json();
 };
 
-// 获取故梦天气 API
+// 获取韩小韩WebAPI接口
 export const getOtherWeather = async () => {
   const res = await fetch("https://api.vvhan.com/api/weather");
   return await res.json();
