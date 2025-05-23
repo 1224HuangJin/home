@@ -69,6 +69,6 @@ export const getWeather = async (key, city) => {
 
 // 获取故梦天气 API
 export const getOtherWeather = async () => {
-  const res = await fetch("https://api.gmya.net/Api/Weather?format=json&scene=1&appkey=ebd774c929a7f6c7e5df19e355f61e23");
+  const res = await fetch("https://api.vvhan.com/api/weather");
   return await res.json();
 };

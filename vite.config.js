@@ -34,7 +34,7 @@ export default ({ mode }) =>
               },
             },
             {
-              urlPattern: /^\/images\//, // 排除 /images 下的内容
+              urlPattern: /^\/home-image\//, // 排除 /images 下的内容
               handler: "NetworkOnly", // 完全依赖网络请求
             },
           ],
@@ -49,37 +49,37 @@ export default ({ mode }) =>
           background_color: "#424242",
           icons: [
             {
-              src: "/images/icon/48.png",
+              src: "/home-image/icon/48.png",
               sizes: "48x48",
               type: "image/png",
             },
             {
-              src: "/images/icon/72.png",
+              src: "/home-image/icon/72.png",
               sizes: "72x72",
               type: "image/png",
             },
             {
-              src: "/images/icon/96.png",
+              src: "/home-image/icon/96.png",
               sizes: "96x96",
               type: "image/png",
             },
             {
-              src: "/images/icon/128.png",
+              src: "/home-image/icon/128.png",
               sizes: "128x128",
               type: "image/png",
             },
             {
-              src: "/images/icon/144.png",
+              src: "/home-image/icon/144.png",
               sizes: "144x144",
               type: "image/png",
             },
             {
-              src: "/images/icon/192.png",
+              src: "/home-image/icon/192.png",
               sizes: "192x192",
               type: "image/png",
             },
             {
-              src: "/images/icon/512.png",
+              src: "/home-image/icon/512.png",
               sizes: "512x512",
               type: "image/png",
             },

@@ -1,8 +1,12 @@
 <template>
-  <div class="weather" v-if="weatherData.weather && weatherData.weather.city && weatherData.weather.weather">
-    <span>{{ weatherData.weather.city }}&nbsp;</span>
-    <span>{{ weatherData.weather.weather }}&nbsp;</span>
-    <span>{{ weatherData.weather.temperature }}℃</span>
+  <div class="weather" v-if="weatherData.city && weatherData.data.type">
+    <span>{{ weatherData.city }}&nbsp;</span>
+    <span>{{ weatherData.data.type }}&nbsp;</span>
+    <span>{{ weatherData.data.low }}</span>
+    <span class="sm-hidden">
+      &nbsp;{{ weatherData.data.fengxiang }}&nbsp;
+    </span>
+    <span class="sm-hidden">{{ weatherData.data.fengli }}</span>
   </div>
   <div class="weather" v-else>
     <span>天气数据获取失败</span>
@@ -10,74 +14,73 @@
 </template>
 
 <script setup>
-import { getAdcode, getWeather, getOtherWeather } from "@/api";
+import { h } from "vue";
 import { Error } from "@icon-park/vue-next";
+import { ElMessage } from "element-plus";
+import { getAdcode, getWeather, getOtherWeather } from "@/api";
 
 // 高德开发者 Key
 const mainKey = import.meta.env.VITE_WEATHER_KEY;
 
 // 天气数据
 const weatherData = reactive({
-  weather: {
-    city: null,
-    weather: null, // 天气现象
-    temperature: null, // 实时气温
+  city: null, // 城市
+  data: {
+    type: null, // 天气现象
+    low: null, // 最低气温
+    high: null, // 最高气温
+    fengxiang: null, // 风向描述
+    fengli: null, // 风力级别
   },
 });
-
-// 取出天气平均值
-const getTemperature = (min, max) => {
-  try {
-    // 计算平均值并四舍五入
-    const average = (Number(min) + Number(max)) / 2;
-    return Math.round(average);
-  } catch (error) {
-    console.error("计算温度出现错误：", error);
-    return "NaN";
-  }
-};
 
 // 获取天气数据
 const getWeatherData = async () => {
   try {
-    // 获取地理位置信息
-    if (!mainKey) {
-      console.log("未配置，使用备用天气接口");
-      const result = await getOtherWeather();
-      console.log(result);
-      const data = result.data;
-      weatherData.weather = {
-        city: data.location.city || "未知地区",
-        weather: data.now.text || "未知天气",
-        temperature: data.now.temperature || "未知温度",
-      };
-    } else {
-      // 获取 Adcode
+    if (mainKey) {
+      // 使用高德地图 API
       const adCode = await getAdcode(mainKey);
-      console.log(adCode);
       if (adCode.infocode !== "10000") {
         throw "地区查询失败";
       }
-      weatherData.weather = {
-        city: adCode.city || "未知地区",
-        weather: "未知天气", // 默认值
-        temperature: "未知温度", // 默认值
-      };
-      // 获取天气信息
+      weatherData.city = adCode.city;
       const result = await getWeather(mainKey, adCode.adcode);
-      // 检查 result.lives 是否存在且不为空
-      if (result.lives && result.lives.length > 0) {
-        weatherData.weather = {
-          city: result.lives[0].city || "未知地区",
-          weather: result.lives[0].weather || "未知天气",
-          temperature: result.lives[0].temperature || "未知温度",
-        };
-      } else {
-        console.warn("API 返回的 lives 数据为空");
-        weatherData.weather = {
-          city: "未知地区",
-          weather: "未知天气",
-          temperature: "未知温度",
+      weatherData.data = {
+        type: result.lives[0].weather,
+        low: result.lives[0].temperature,
+        high: result.lives[0].temperature,
+        fengxiang: result.lives[0].winddirection,
+        fengli: result.lives[0].windpower,
+      };
+    } else {
+      try {
+        // 使用自定义 API（韩小韩）
+        console.log("未配置，使用备用天气接口");
+        const result = await getOtherWeather();
+        if (result.success) {
+          weatherData.city = result.city;
+          weatherData.data = {
+            type: result.data.type,
+            low: result.data.low,
+            high: result.data.high,
+            fengxiang: result.data.fengxiang,
+            fengli: result.data.fengli,
+          };
+        } else {
+          throw "天气数据获取失败";
+        }
+      } 
+      catch (customError) {
+        console.error(customError);
+        const result = await getOtherWeather();
+        const data = result.result;
+        weatherData.city = data.city.City || "未知地区";
+        weatherData.data = {
+          type: data.condition.day_weather,
+          low: data.condition.min_degree,
+          high: data.condition.max_degree,
+          fengxiang: data.condition.day_wind_direction,
+          fengli: data.condition.day_wind_power,
         };
       }
     }

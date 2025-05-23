@@ -34,12 +34,16 @@ const emit = defineEmits(["loadComplete"]);
 
 // 壁纸随机数
 // 请依据文件夹内的图片个数修改 Math.random() 后面的第一个数字
-const bgRandom = Math.floor(Math.random() * 8 + 1);
+const bgRandom = Math.floor(Math.random() * 10 + 1);
 
 // 更换壁纸链接
 const changeBg = (type) => {
   if (type == 0) {
-    bgUrl.value = `/images/background${bgRandom}.jpg`;
+    if (import.meta.env.VITE_IMAGE_EXTERNAL_URL === 'true') {
+      bgUrl.value = `https://cdn.jsdmirror.cn/gh/FrecklyComb1728/picx-images-hosting@master/home-image/background${bgRandom}.jpg`;
+    } else {
+      bgUrl.value = `/home-image/background${bgRandom}.jpg`;
+    }
   } else if (type == 1) {
     bgUrl.value = "https://api.dujin.org/bing/1920.php";
   } else if (type == 2) {
@@ -76,7 +80,7 @@ const imgLoadError = () => {
       fill: "#efefef",
     }),
   });
-  bgUrl.value = `/images/background${bgRandom}.jpg`;
+  bgUrl.value = `/home-image/background${bgRandom}.jpg`;
 };
 
 // 监听壁纸切换
