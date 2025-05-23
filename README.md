@@ -95,9 +95,7 @@ const siteIcon = {
 
 ### 天气
 
-> 天气api换成了[故梦api](https://www.gmya.net/api/detail/Weather)
-> 并删除了高德api的相关代码，**.env文件里的高德key值不要填写否则天气不能正常显示**
-> 如使用请去[故梦api](https://login.gmya.net/user/register)申请自己的密钥（只需要>一个邮箱）仅支持 **中国大陆地区**
+> 天气api换成了[韩小韩WebAPI接口](https://api.vvhan.com/)
 
 
 ### 音乐
