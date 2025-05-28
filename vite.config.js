@@ -33,10 +33,10 @@ export default ({ mode }) =>
                 cacheName: "js-css-cache",
               },
             },
-            {
-              urlPattern: /^\/home-image\//, // 排除 /images 下的内容
-              handler: "NetworkOnly", // 完全依赖网络请求
-            },
+            // {
+            //   urlPattern: /^\/home-image\//, // 排除 /images 下的内容
+            //   handler: "NetworkOnly", // 完全依赖网络请求
+            // },
           ],
         },
         manifest: {
