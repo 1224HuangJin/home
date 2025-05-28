@@ -5,9 +5,9 @@
     "link": "https://blog.iambees.com/"
   },
   {
-    "icon": "Cloud",
-    "name": "云盘",
-    "link": "https://pan.huang1111.cn/"
+    "icon": "Compass",
+    "name": "让我为你搜索",
+    "link": "https://mfawa.top"
   },
   {
     "icon": "Compass",
@@ -23,5 +23,10 @@
     "icon": "LaptopCode",
     "name": "站点监测",
     "link": "https://status.mfawa.top"
+  },
+  {
+    "icon": "Tools",
+    "name": "工具箱",
+    "link": "https://tools.mfawa.top/"
   }
 ]
