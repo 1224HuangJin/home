@@ -2,7 +2,7 @@
   <div class="weather" v-if="weatherData.city && weatherData.data.type">
     <span>{{ weatherData.city }}&nbsp;</span>
     <span>{{ weatherData.data.type }}&nbsp;</span>
-    <span>{{ weatherData.data.low }}</span>
+    <span>{{ weatherData.data.low }}°C</span>
     <span class="sm-hidden">
       &nbsp;{{ weatherData.data.fengxiang }}&nbsp;
     </span>
@@ -17,7 +17,7 @@
 import { h } from "vue";
 import { Error } from "@icon-park/vue-next";
 import { ElMessage } from "element-plus";
-import { getAdcode, getWeather, getOtherWeather } from "@/api";
+import { getAdcode, getWeather, getOtherWeather, getVmyWeather } from "@/api";
 
 // 高德开发者 Key
 const mainKey = import.meta.env.VITE_WEATHER_KEY;
@@ -53,40 +53,61 @@ const getWeatherData = async () => {
         fengli: result.lives[0].windpower,
       };
     } else {
-      try {
-        // 使用自定义 API（韩小韩）
-        console.log("未配置，使用备用天气接口");
-        const result = await getOtherWeather();
-        if (result.success) {
-          weatherData.city = result.city;
-          weatherData.data = {
-            type: result.data.type,
-            low: result.data.low,
-            high: result.data.high,
-            fengxiang: result.data.fengxiang,
-            fengli: result.data.fengli,
-          };
-        } else {
-          throw "天气数据获取失败";
-        }
-      } 
-      catch (customError) {
-        console.error(customError);
-        const result = await getOtherWeather();
-        const data = result.result;
-        weatherData.city = data.city.City || "未知地区";
-        weatherData.data = {
-          type: data.condition.day_weather,
-          low: data.condition.min_degree,
-          high: data.condition.max_degree,
-          fengxiang: data.condition.day_wind_direction,
-          fengli: data.condition.day_wind_power,
-        };
-      }
+      throw "未配置高德Key";
     }
   } catch (error) {
-    console.error("天气信息获取失败:" + error);
-    onError("天气信息获取失败");
+    try {
+      // 使用韩小韩 API 作为第一个兜底
+      console.log("尝试使用韩小韩天气接口");
+      const result = await getOtherWeather();
+      if (result.success) {
+        weatherData.city = result.city;
+        weatherData.data = {
+          type: result.data.type,
+          low: result.data.low.replace('℃', ''),
+          high: result.data.high.replace('℃', ''),
+          fengxiang: result.data.fengxiang,
+          fengli: result.data.fengli,
+        };
+      } else {
+        console.warn("韩小韩天气接口返回失败状态");
+        throw "韩小韩天气接口失败";
+      }
+    } catch (hanError) {
+      try {
+        // 使用52vmy作为最后的兜底
+        console.log("尝试使用52vmy天气接口");
+        const result = await getVmyWeather().catch(error => {
+          console.warn("52vmy请求失败:", error);
+          throw error;
+        });
+        
+        if (result.code === 200 && result.data) {
+          weatherData.city = result.data.city || (result.data.current && result.data.current.city) || "未知地区";
+          weatherData.data = {
+            type: result.data.weather || (result.data.current && result.data.current.weather),
+            low: (result.data.tempn || (result.data.current && result.data.current.tempn) || '').toString().replace('℃', ''),
+            high: (result.data.temp || (result.data.current && result.data.current.temp) || '').toString().replace('℃', ''),
+            fengxiang: result.data.wind || (result.data.current && result.data.current.wind),
+            fengli: result.data.windSpeed || (result.data.current && result.data.current.windSpeed),
+          };
+        } else {
+          console.warn("52vmy返回数据格式异常:", result);
+          throw "52vmy天气接口数据异常";
+        }
+      } catch (vmyError) {
+        console.error("所有天气接口均失败:", vmyError);
+        weatherData.city = null;
+        weatherData.data = {
+          type: null,
+          low: null,
+          high: null,
+          fengxiang: null,
+          fengli: null,
+        };
+        onError("天气信息获取失败");
+      }
+    }
   }
 };
 

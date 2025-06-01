@@ -72,3 +72,9 @@ export const getOtherWeather = async () => {
   const res = await fetch("https://api.vvhan.com/api/weather");
   return await res.json();
 };
+
+// 获取52vmy天气接口
+export const getVmyWeather = async () => {
+  const res = await fetch('/weather-api/api/query/tian');
+  return await res.json();
+};
