@@ -17,7 +17,7 @@
 import { h } from "vue";
 import { Error } from "@icon-park/vue-next";
 import { ElMessage } from "element-plus";
-import { getAdcode, getWeather, getOtherWeather, getVmyWeather } from "@/api";
+import { getAdcode, getWeather, getOtherWeather } from "@/api";
 
 // 高德开发者 Key
 const mainKey = import.meta.env.VITE_WEATHER_KEY;
@@ -57,7 +57,7 @@ const getWeatherData = async () => {
     }
   } catch (error) {
     try {
-      // 使用韩小韩 API 作为第一个兜底
+      // 使用韩小韩 API 作为兜底
       console.log("尝试使用韩小韩天气接口");
       const result = await getOtherWeather();
       if (result.success) {
@@ -74,39 +74,16 @@ const getWeatherData = async () => {
         throw "韩小韩天气接口失败";
       }
     } catch (hanError) {
-      try {
-        // 使用52vmy作为最后的兜底
-        console.log("尝试使用52vmy天气接口");
-        const result = await getVmyWeather().catch(error => {
-          console.warn("52vmy请求失败:", error);
-          throw error;
-        });
-        
-        if (result.code === 200 && result.data) {
-          weatherData.city = result.data.city || (result.data.current && result.data.current.city) || "未知地区";
-          weatherData.data = {
-            type: result.data.weather || (result.data.current && result.data.current.weather),
-            low: (result.data.tempn || (result.data.current && result.data.current.tempn) || '').toString().replace('℃', ''),
-            high: (result.data.temp || (result.data.current && result.data.current.temp) || '').toString().replace('℃', ''),
-            fengxiang: result.data.wind || (result.data.current && result.data.current.wind),
-            fengli: result.data.windSpeed || (result.data.current && result.data.current.windSpeed),
-          };
-        } else {
-          console.warn("52vmy返回数据格式异常:", result);
-          throw "52vmy天气接口数据异常";
-        }
-      } catch (vmyError) {
-        console.error("所有天气接口均失败:", vmyError);
-        weatherData.city = null;
-        weatherData.data = {
-          type: null,
-          low: null,
-          high: null,
-          fengxiang: null,
-          fengli: null,
-        };
-        onError("天气信息获取失败");
-      }
+      console.error("所有天气接口均失败:", hanError);
+      weatherData.city = null;
+      weatherData.data = {
+        type: null,
+        low: null,
+        high: null,
+        fengxiang: null,
+        fengli: null,
+      };
+      onError("天气信息获取失败");
     }
   }
 };
