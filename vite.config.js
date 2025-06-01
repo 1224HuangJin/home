@@ -91,13 +91,6 @@ export default ({ mode }) =>
     server: {
       port: "3000",
       open: true,
-      proxy: {
-        '/weather-api': {
-          target: 'https://api.52vmy.cn',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/weather-api/, '')
-        }
-      }
     },
     resolve: {
       alias: [

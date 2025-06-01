@@ -75,6 +75,6 @@ export const getOtherWeather = async () => {
 
 // 获取52vmy天气接口
 export const getVmyWeather = async () => {
-  const res = await fetch('/weather-api/api/query/tian');
+  const res = await fetch('https://api.52vmy.cn/api/query/tian');
   return await res.json();
 };
