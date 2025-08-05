@@ -22,11 +22,11 @@
     "icon": "/home-image/icon/email.png",
     "tip": "来封 Email ~",
     "url": "mailto:wdsjwyf@126.com"
-  }
+  },
   {
     "name": "Twitter",
     "icon": "/images/icon/twitter.png",
     "tip": "Twitter ~",
     "url": "https://twitter.com/cn_mifeng"
-  },
+  }
 ]
