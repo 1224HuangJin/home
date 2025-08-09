@@ -27,9 +27,14 @@
               :style="index < 3 ? 'margin-bottom: 20px' : null"
               @click="jumpLink(item)"
             >
-              <Icon size="26">
-                <component :is="siteIcon[item.icon]" />
-              </Icon>
+              <template v-if="item.iconUrl">
+                <img class="icon-img" :src="item.iconUrl" width="26" height="26" />
+              </template>
+              <template v-else>
+                <Icon size="26">
+                  <component :is="siteIcon[item.icon]" />
+                </Icon>
+              </template>
               <span class="name text-hidden">{{ item.name }}</span>
             </div>
           </el-col>
@@ -94,6 +99,10 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .links {
+  .icon-img {
+    display: inline-block;
+    vertical-align: middle;
+  }
   .line {
     margin: 2rem 0.25rem 1rem;
     font-size: 1.1rem;
