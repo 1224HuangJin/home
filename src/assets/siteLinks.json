@@ -1,11 +1,5 @@
 [
   {
-    "icon": "",
-    "iconUrl": "https://www.netlify.com/favicon/icon.svg",
-    "name": "Netlify",
-    "link": "https://www.netlify.com/"
-  },
-  {
     "icon": "Blog",
     "iconUrl": "",
     "name": "个人Blog",
