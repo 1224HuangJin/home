@@ -31,12 +31,14 @@
 const bgRandom = Math.floor(Math.random() * 10 + 1);
 ```
 ### Code of Conduct
-![Code_of_Conduct](https://github.com/user-attachments/assets/6934c1dc-058f-4917-b435-3590bb246feb)
+[![Code_of_Conduct](https://github.com/user-attachments/assets/6934c1dc-058f-4917-b435-3590bb246feb)](https://blog.imbee.top/pages/about#Code_of_Conduct)
 
 
 ### This site is powered by Netlify
 <a href="https://www.netlify.com">
   <img width="114" height="50" alt="Deploys by Netlify" src="https://www.netlify.com/v3/img/components/netlify-dark.svg" />
 </a>
+
+
 
 
