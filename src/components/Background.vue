@@ -38,21 +38,8 @@ const bgRandom = Math.floor(Math.random() * 12 + 1);
 
 // 更换壁纸链接
 const changeBg = (type) => {
-  if (type == 0) {
-    if (mainUrl) {
-      bgUrl.value = mainUrl.replace('{bgrandom}', bgRandom);
-    } else {
-      bgUrl.value = `/home-image/background${bgRandom}.jpg`;
-    }
-  } else if (type == 1) {
-    bgUrl.value = "https://bing.img.run/uhd.php";
-  } else if (type == 2) {
-    bgUrl.value = "https://tu.ltyuanfang.cn/api/fengjing.php";
-  } else if (type == 3) {
-    bgUrl.value = "https://api.imlazy.ink/img";
-  }
+  bgUrl.value = "https://io.wss.moe/image";
 };
-
 // 图片加载完成
 const imgLoadComplete = () => {
   imgTimeout.value = setTimeout(

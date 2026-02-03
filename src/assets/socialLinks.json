@@ -6,27 +6,9 @@
     "url": "https://github.com/1224HuangJin"
   },
   {
-    "name": "BiliBili",
-    "icon": "/home-image/icon/bilibili.png",
-    "tip": "(゜-゜)つロ 干杯 ~",
-    "url": "https://space.bilibili.com/3461573754489594"
-  },
-  {
-    "name": "QQ",
-    "icon": "/home-image/icon/qq.png",
-    "tip": "有什么事吗",
-    "url": "https://qm.qq.com/q/EVFO6tqpSa"
-  },
-  {
     "name": "Email",
     "icon": "/home-image/icon/email.png",
     "tip": "来封 Email ~",
     "url": "mailto:1224huangjin@gmail.com"
-  },
-  {
-    "name": "Twitter",
-    "icon": "/home-image/icon/twitter.png",
-    "tip": "Twitter ~",
-    "url": "https://twitter.com/cn_mifeng"
   }
 ]

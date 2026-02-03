@@ -6,7 +6,7 @@
         <span class="name">
           {{ siteName }}
         </span>
-        <span class="tip"> 请稍等片刻～ 加载需5-10秒～ </span>
+        <span class="tip"> 加载仅需5-10秒～ </span>
       </div>
     </div>
     <div class="loader-section section-left" />
